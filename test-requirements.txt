@@ -1,1 +1,2 @@
 pytest
+mock>=2.0

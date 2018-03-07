@@ -105,3 +105,4 @@ ENV/
 
 # pytest
 .pytest_cache/
+/ucsm_gui/.app.py.icloud
