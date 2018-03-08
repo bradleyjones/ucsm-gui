@@ -1,2 +1,2 @@
 ucsmsdk>=0.9.3.1
-urllib2
+click>=6.7
