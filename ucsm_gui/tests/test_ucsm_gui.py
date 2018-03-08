@@ -5,12 +5,13 @@ import ucsm_gui
 
 from ucsmsdk import ucsexception
 
+
 @mock.patch('socket.gethostbyaddr')
 def test_check_host_reachable(mock_gethost):
     mock_gethost.side_effect = [True, socket.herror, socket.gaierror]
-    assert ucsm_gui._check_host_reachable('hostname') == True
-    assert ucsm_gui._check_host_reachable('hostname') == False
-    assert ucsm_gui._check_host_reachable('hostname') == False
+    assert ucsm_gui._check_host_reachable('hostname') is True
+    assert ucsm_gui._check_host_reachable('hostname') is False
+    assert ucsm_gui._check_host_reachable('hostname') is False
 
 
 @mock.patch('socket.gethostbyaddr')
