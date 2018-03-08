@@ -1,4 +1,5 @@
 import click
+import ucsm_gui
 
 
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
@@ -10,6 +11,15 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 @click.argument('username', required=False)
 @click.argument('password', required=False)
 def main(config, host, username, password):
-    """ Do some ucsm gui things
+    """ Launch UCSM GUI
     """
-    click.echo(click.get_current_context().get_help())
+    if username and password:
+        ucsm_gui.launch(host, username, password)
+    if username:
+        password = click.prompt('Enter password', hide_input=True)
+        ucsm_gui.launch(host, username, password)
+
+    # TODO Look up host from config file
+    username = click.prompt('Enter username')
+    password = click.prompt('Enter password', hide_input=True)
+    ucsm_gui.launch(host, username, password)
