@@ -1,11 +1,16 @@
 import socket
 import sys
-import urllib2
 
 from ucsmsdk import ucsexception
 from ucsmsdk import ucshandle
 from ucsmsdk.utils import ucsguilaunch
 
+try:
+    # Python 2
+    from urllib2 import URLError
+except ImportError:
+    # Python 3
+    from urllib.error import URLError
 
 socket.setdefaulttimeout(5)
 
@@ -29,7 +34,7 @@ def launch(hostname, username, password):
 
     try:
         handle.login()
-    except urllib2.URLError:
+    except URLError:
         sys.exit("Error logging into UCSM. Check hostname/ip is correct.")
     except ucsexception.UcsException:
         sys.exit("Authentication error. Check username/password.")

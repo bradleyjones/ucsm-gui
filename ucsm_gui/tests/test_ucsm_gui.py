@@ -2,7 +2,6 @@ import mock
 import pytest
 import socket
 import ucsm_gui
-import urllib2
 
 from ucsmsdk import ucsexception
 
@@ -26,7 +25,7 @@ def test_launch_exits_on_unreachable_host(mock_gethost):
 def test_launch_exits_on_exceptions_from_ucsmsdk_login(mock_gethost,
                                                        mock_login):
     mock_gethost.return_value = True
-    mock_login.side_effect = [urllib2.URLError('url error'),
+    mock_login.side_effect = [ucsm_gui.URLError('url error'),
                               ucsexception.UcsException(500, 'ucs error')]
     with pytest.raises(SystemExit):
         ucsm_gui.launch('hostname', 'user', 'password')
