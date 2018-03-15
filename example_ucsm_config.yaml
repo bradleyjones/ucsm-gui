@@ -1,0 +1,9 @@
+NAME:
+  hostname: 0.0.0.0
+  username: user1
+  password: password
+
+NAME2:
+  hostname: 1.1.1.1
+  username: user2
+  password: p4ssw0rd
