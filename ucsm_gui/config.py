@@ -1,3 +1,4 @@
+import jsonschema
 import sys
 import yaml
 
@@ -6,16 +7,39 @@ from os.path import expanduser
 
 DEFAULT_CONFIG_PATH = "{}/.ucsm_config.yaml".format(expanduser('~'))
 
+CONFIG_SCHEMA = {
+    "title": "Hosts",
+    "type": "object",
+    "patternProperties": {
+        "^[a-zA-Z]+$": {
+            "type": "object",
+            "properties": {
+                "hostname": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            },
+            "required": ["hostname"],
+            "additionalProperties": False
+        }
+    }
+}
+
 
 def load(path=DEFAULT_CONFIG_PATH):
     try:
         with open(path) as p:
             try:
                 config = yaml.safe_load(p)
-                # jsonschema.validate(config, CONFIG_SCHEMA)
+                jsonschema.validate(config, CONFIG_SCHEMA)
                 return config
             except yaml.YAMLError:
-                sys.exit("Unable to load config file")
+                sys.exit("Unable to load config file, error parsing YAML")
     except IOError:
         if path is DEFAULT_CONFIG_PATH:
             return
