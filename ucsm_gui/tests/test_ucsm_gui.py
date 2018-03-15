@@ -30,6 +30,8 @@ def test_launch_exits_on_exceptions_from_ucsmsdk_login(mock_gethost,
                               ucsexception.UcsException(500, 'ucs error')]
     with pytest.raises(SystemExit):
         ucsm_gui.launch('hostname', 'user', 'password')
+    with pytest.raises(SystemExit):
+        ucsm_gui.launch('hostname', 'user', 'password')
 
 
 @mock.patch('ucsmsdk.utils.ucsguilaunch.ucs_gui_launch')
