@@ -1,3 +1,5 @@
 pytest
 mock>=2.0
 flake8
+coverage
+pytest-cov
