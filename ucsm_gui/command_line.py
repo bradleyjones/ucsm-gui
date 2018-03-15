@@ -7,20 +7,22 @@ from ucsm_gui import config as cfg
 CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
-def _get_username(conf, host):
-    username = False
+def _get_host_from_conf(conf, host):
     if host in conf:
-        username = conf[host].get('username', False)
+        return conf[host]
+    return next((conf[item] for item in conf
+                if conf[item]["hostname"] == host), None)
+
+
+def _get_username(host):
+    username = host.get('username', False)
     if not username:
         username = click.prompt('Enter username')
     return username
 
 
-def _get_password(conf, host):
-    # Look up password from config file first
-    password = False
-    if host in conf:
-        password = conf[host].get('password', False)
+def _get_password(host):
+    password = host.get('password', False)
     if not password:
         password = click.prompt('Enter password', hide_input=True)
     return password
@@ -42,10 +44,13 @@ def main(config, host, username, password):
 
     if username and password:
         ucsm_gui.launch(host, username, password)
+
+    host_details = _get_host_from_conf(conf, host)
+
     if username:
-        password = _get_password(conf, host)
+        password = _get_password(host_details)
         ucsm_gui.launch(host, username, password)
 
-    username = _get_username(conf, host)
-    password = _get_password(conf, host)
+    username = _get_username(host_details)
+    password = _get_password(host_details)
     ucsm_gui.launch(host, username, password)
