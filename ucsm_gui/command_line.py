@@ -8,6 +8,9 @@ CONTEXT_SETTINGS = dict(help_option_names=['-h', '--help'])
 
 
 def _get_host_from_conf(conf, host):
+    # convert ucsm names to lowercase for comparison
+    conf = dict((k.lower(), v) for k, v in conf.iteritems())
+    host = host.lower()
     if host in conf:
         return conf[host]["hostname"], conf[host]
     return next(((conf[item]["hostname"], conf[item]) for item in conf
