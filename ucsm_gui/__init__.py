@@ -1,16 +1,11 @@
 import socket
 import sys
 
+from six.moves.urllib.error import URLError
+
 from ucsmsdk import ucsexception
 from ucsmsdk import ucshandle
 from ucsmsdk.utils import ucsguilaunch
-
-try:
-    # Python 2
-    from urllib2 import URLError
-except ImportError:
-    # Python 3
-    from urllib.error import URLError
 
 socket.setdefaulttimeout(5)
 
