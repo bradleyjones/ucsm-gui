@@ -2,3 +2,4 @@ ucsmsdk>=0.9.3.1
 click>=6.7
 jsonschema
 six
+pyyaml
