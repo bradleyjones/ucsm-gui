@@ -11,11 +11,12 @@ CONFIG_SCHEMA = {
     "title": "Hosts",
     "type": "object",
     "patternProperties": {
-        "^[a-zA-Z]+$": {
+        "^.+": {
             "type": "object",
             "properties": {
                 "hostname": {
-                    "type": "string"
+                    "type": "string",
+                    "pattern": "^([a-zA-Z0-9\-\.])+$"
                 },
                 "username": {
                     "type": "string"
