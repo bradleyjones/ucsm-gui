@@ -6,6 +6,9 @@ python:
 # command to install dependencies
 install:
   - pip install tox-travis
+  - pip install coveralls
 # command to run tests
 script:
   - tox
+after_success:
+  - coveralls
