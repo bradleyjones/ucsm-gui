@@ -3,10 +3,9 @@ import mock
 import pytest
 import tempfile
 import ucsm_gui
-import yaml
 
 
-VALID_CONFIG="""
+VALID_CONFIG = """
 ---
 TEST-HOST:
   hostname: 127.0.0.1
@@ -14,21 +13,23 @@ TEST-HOST:
   password: password
 """
 
-VALID_RESPONSE={'TEST-HOST':{'hostname':'127.0.0.1', 'username':'me',
-    'password':'password'}}
+VALID_RESPONSE = {'TEST-HOST': {'hostname': '127.0.0.1',
+                                'username': 'me',
+                                'password': 'password'}}
 
-INVALID_CONFIG="""
+INVALID_CONFIG = """
 ---
 TEST-HOST:
   hostname: IM_INVALID
 """
 
-INVALID_YAML="""
+INVALID_YAML = """
 --
 TEST-HOST
 username me
   password: password
 """
+
 
 def generate_config_fixture(conf):
     @pytest.yield_fixture
