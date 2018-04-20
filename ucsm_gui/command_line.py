@@ -14,7 +14,7 @@ def _get_host_from_conf(conf, host):
     if host in conf:
         return conf[host]["hostname"], conf[host]
     return next(((conf[item]["hostname"], conf[item]) for item in conf
-                if conf[item]["hostname"] == host), None)
+                if conf[item]["hostname"] == host), (host, {}))
 
 
 def _get_username(host):
