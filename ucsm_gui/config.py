@@ -43,5 +43,5 @@ def load(path=DEFAULT_CONFIG_PATH):
                 sys.exit("Unable to load config file, error parsing YAML")
     except IOError:
         if path is DEFAULT_CONFIG_PATH:
-            return
+            return {}
         sys.exit("Config file does not exist at {}".format(path))

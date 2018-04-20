@@ -1,6 +1,6 @@
 import mock
-import pytest
 
+from click.testing import CliRunner
 from ucsm_gui import command_line
 
 
@@ -50,4 +50,61 @@ def test_get_password_from_dict_valid():
 @mock.patch('click.prompt')
 def test_get_password_prompt(mock_prompt):
     mock_prompt.return_value = 'testpass'
-    assert command_line._get_username({}) == 'testpass'
+    assert command_line._get_password({}) == 'testpass'
+
+
+def test_cli_no_args():
+    runner = CliRunner()
+    result = runner.invoke(command_line.main, [])
+    assert result.exit_code == 2
+    assert 'Missing argument "host"' in result.output
+
+
+# Test config file + host via cli, username & password passed in via stdin
+@mock.patch('ucsm_gui.launch')
+@mock.patch('ucsm_gui.config.load')
+def test_cli_config_host(mock_config_load, mock_launch):
+    mock_config_load.return_value = {}
+    mock_launch.return_value = True
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ['-c', '/path/to/config/file', 'testhost'],
+                           input='username\npassword\n')
+    assert result.exit_code == 0
+    assert mock_config_load.called_once_with('/path/to/config/file')
+    assert mock_launch.called_once_with('testhost', 'username', 'password')
+
+
+# Test host via cli, username & password passed in via stdin
+@mock.patch('ucsm_gui.launch')
+def test_cli_host(mock_launch):
+    mock_launch.return_value = True
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ['testhost'],
+                           input='username\npassword\n')
+    assert result.exit_code == 0
+    assert mock_launch.called_once_with('testhost', 'username', 'password')
+
+
+# Test host & username via cli, password passed in via stdin
+@mock.patch('ucsm_gui.launch')
+def test_cli_host_username(mock_launch):
+    mock_launch.return_value = True
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ['testhost', 'username'],
+                           input='password\n')
+    assert result.exit_code == 0
+    assert mock_launch.called_once_with('testhost', 'username', 'password')
+
+
+# Test host, username & password passed in via cli
+@mock.patch('ucsm_gui.launch')
+def test_cli_host_username_password(mock_launch):
+    mock_launch.return_value = True
+    runner = CliRunner()
+    result = runner.invoke(command_line.main,
+                           ['testhost', 'username', 'password'])
+    assert result.exit_code == 0
+    assert mock_launch.called_once_with('testhost', 'username', 'password')
