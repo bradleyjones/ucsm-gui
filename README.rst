@@ -13,11 +13,11 @@ Usage: ucsm-gui [OPTIONS] HOST [USERNAME] [PASSWORD]
 Launch UCSM GUI
 
 Options:
- +-------------------+----------------------------+
- | -c, --config PATH | Path to config file        |
- +-------------------+----------------------------+
- | -h, --help        | Show this message and exit.|
- +-------------------+----------------------------+
+ +--------------+------+----------------------------+
+ | -c, --config | PATH | Path to config file        |
+ +--------------+------+----------------------------+
+ | -h, --help   |      | Show this message and exit.|
+ +--------------+------+----------------------------+
 
 ************************
 Arch Linux Install Notes
